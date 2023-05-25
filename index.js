@@ -9,8 +9,13 @@ const PORT = 3005;
 
 const URL = "https://www.amazon.in/s?k=iphone+14+pro+max&ref=nb_sb_ss_ts-doa-p_3_6";
 async function fetchData() {
-    const resposne = await axios(URL);
-    console.log(resposne);
+    try {
+        const resposne = await axios(URL);
+        const { document } = new JSDOM(resposne.data).window;
+        console.log(document.querySelector(".s-card-container").textContent);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 fetchData();
